@@ -1,0 +1,37 @@
+Dubbo
+
+dubbo是java开发的，所以用Dubbo必须先安装jdk
+
+
+一. 单台zookeeper
+	1.下载zookeeper.tar.gz 安装包
+	2.拖进Linux系统，tar -xvf zookeeper.tar.gz 解压
+	3.在zookeeper的根目录里面创建data和log文件夹，存放日志
+	4.找到zookeeper的根目录，进到conf文件夹里面有个zoo_sample.cfg文件
+	5.修改  dataDir=/usr/local/src/zookeeper/zookeeper3.4/data
+			dataLogDir=/usr/local/src/zookeeper/zookeeper3.4/log
+	6.cd到bin目录里面，运行  sh zkServer.sh start 运行zookeeper服务
+							 sh zkServer.sh stop 
+							 sh zkServer.sh status
+
+二. 集群
+	
+	1.在zookeeper里面创建cluster文件夹
+	2.在zookeeper里面创建zoo1 zoo2 zoo3
+	3.在zoo1里面创建data和log 在zoo2里面创建data和log 在zoo3里面创建data和log
+	4.在data里面创建myid文件，分别对应1， 2， 3
+	5.cd到conf文件夹里面复制zoo_simple_cfg文件,分别为zoo1.cfg  zoo2.cfg  zoo3.cfg
+	6.更改  dataDir=/usr/local/src/zookeeper/zookeeper3.4/cluster/zoo1/data
+			dataLogDir=/usr/local/src/zookeeper/zookeeper3.4/cluster/zoo1/log
+			clientPort=2181
+			server.1=192.168.203.128:2887:3887
+			server.2=192.168.203.128:2888:3888
+			server.3=192.168.203.128:2889:3889
+		最下面的三行都是一样的
+	7.cd到bin目录下启动zookeeper服务即可  sh zkServer.sh start zoo1.cfg
+									      sh zkServer.sh start zoo2.cfg
+										  sh zkServer.sh start zoo3.cfg
+
+
+
+
