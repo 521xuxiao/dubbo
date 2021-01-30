@@ -2,7 +2,7 @@ Dubbo
 
 dubbo是java开发的，所以用Dubbo必须先安装jdk
 
-
+ 
 一. 单台zookeeper
 	1.下载zookeeper.tar.gz 安装包
 	2.拖进Linux系统，tar -xvf zookeeper.tar.gz 解压
@@ -31,7 +31,49 @@ dubbo是java开发的，所以用Dubbo必须先安装jdk
 	7.cd到bin目录下启动zookeeper服务即可  sh zkServer.sh start zoo1.cfg
 									      sh zkServer.sh start zoo2.cfg
 										  sh zkServer.sh start zoo3.cfg
-
-
-
-
+										  
+										  
+三. Dubbo的负载均衡
+	1.随机策略（默认）
+		在消费者（controller）里面@Reference(timeout=3000, check=true, loadbalance="random")
+	2.轮询策略
+		在消费者（controller）里面@Reference(timeout=3000, check=true, loadbalance="roundrobin")
+	3.ip hash策略
+		consistenthash
+	4.最小活跃数
+		leastactive
+		
+四. sso单点登录+dubbo
+	用户把用户名和密码发给后台，后台进行查询数据库，匹配到就生成一个UUID作为token当做redis的键， 当前查询到的
+	值当做value存在redis里面，下次用户在进行查询数据库的时候会将redis中的键（UUID）传过去，后台进行校验，
+	验证通过，就会给用户查询数据，不通过就返回没有登录的信息，可以利用java操作cookie来进行这个活，
+	前后台分离可以用前端vue的那一套
+	
+	往cookie里面存值
+	Cookie cookie = new Cookie("token", UUID);
+	cookie.setMaxAge(7*24*60*60);   // 七天过期
+	cookie.setPath("/");    // 设置cookie的权限
+	cookiesetDomain("/jt.com");  设置cookie共享，不设置这个只能在相同的域名内才能得到cookie
+	response.addCookie(cookie);
+	
+	从cookie里面取值
+	Cookie[] cookies = Request.getCookies();
+	
+	注： cookie中的setMaxAge(time); time>0 秒为单位
+									time=0 立即删除
+									time=-1关闭对话框删除cookie
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
