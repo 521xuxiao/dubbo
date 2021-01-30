@@ -62,8 +62,21 @@ dubbo是java开发的，所以用Dubbo必须先安装jdk
 	注： cookie中的setMaxAge(time); time>0 秒为单位
 									time=0 立即删除
 									time=-1关闭对话框删除cookie
+									
+									
+五. 拦截器interceptor
 	
-	
+	1. 创建一个loginInterceptor类，继承一下HandlerInterceptorAdapter类， 重写它的preHandle方法；
+		在preHandle方法里面主要做的事情就是验证用户有没有登录，登录放行，没登录重定向到登录页面
+		让用户登录
+	2.  创建一个配置类myWebMvcConfigurer, 实现一下WebMvcConfigurer接口，重写addInterceptors方法
+		在addInterceptors方法里面主要配置要拦截的接口
+		
+		注： 拦截器里面的值可以通过request对象传递到controller里面
+		     存值：request.setAttribute("userId", userId)     取值：request.getAttribute("userId")
+			 
+			
+		
 	
 	
 	
