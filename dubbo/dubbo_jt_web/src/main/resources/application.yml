@@ -1,0 +1,37 @@
+server:
+  port: 8094
+  servlet:
+    session:
+      timeout: 2592000
+    context-path: /
+spring:
+  datasource:
+    #type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/erp?useSSL=false&useUnicode=true&characterEncoding=utf-8&nullCatalogMeansCurrent=true&serverTimezone=GMT%2b8
+    username: root
+    password: root
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+dubbo:
+  scan:
+    basePackages: com.jt
+  application:
+    name: consumer-user
+  registry:
+    address: zookeeper://192.168.203.128:2184?backup=192.168.203.128:2182,192.168.203.128:2183
+  protocol:
+    name: dubbo
+    port: 20881
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    cache-enabled: false
+    map-underscore-to-camel-case: true
+    default-statement-timeout: 30
+logging:
+  level:
+    com.jt: DEBUG
